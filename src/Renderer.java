@@ -53,6 +53,8 @@ public class Renderer extends AbstractRenderer {
         glUniform1f(glGetUniformLocation(basicShader, "u_time"), (float)time);
         glUniform1i(glGetUniformLocation(basicShader, "u_iterations"), ImGuiLayer.iterations[0]);
         glUniform1f(glGetUniformLocation(basicShader, "u_speed"), ImGuiLayer.speed[0]);
+        glUniform3fv(glGetUniformLocation(basicShader, "u_color"), ImGuiLayer.color);
+        glUniform1f(glGetUniformLocation(basicShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
 
         renderTarget.draw(GL_TRIANGLES, basicShader);
     }

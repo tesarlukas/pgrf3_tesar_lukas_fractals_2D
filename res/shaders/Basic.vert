@@ -1,8 +1,5 @@
 #version 450
-#define PI 3.1415926538
 in vec2 inPosition;
-
-uniform float u_time;
 
 out vec4 outPosition;
 
