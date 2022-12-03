@@ -11,11 +11,9 @@ import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer extends AbstractRenderer {
     private int basicShader;
-    private Camera camera;
-    private boolean mouseButton1;
-    private double ox, oy;
-    double time;
     private OGLBuffers renderTarget;
+    double time;
+    private boolean mouseButton1;
 
     @Override
     public void init() {
@@ -53,6 +51,8 @@ public class Renderer extends AbstractRenderer {
         // time
         time = glfwGetTime();
         glUniform1f(glGetUniformLocation(basicShader, "u_time"), (float)time);
+        glUniform1i(glGetUniformLocation(basicShader, "u_iterations"), ImGuiLayer.iterations[0]);
+        glUniform1f(glGetUniformLocation(basicShader, "u_speed"), ImGuiLayer.speed[0]);
 
         renderTarget.draw(GL_TRIANGLES, basicShader);
     }

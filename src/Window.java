@@ -11,6 +11,7 @@ import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
 
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
@@ -39,7 +40,7 @@ public class Window {
         imGuiGl3.dispose();
         imGuiGlfw.dispose();
         ImGui.destroyContext();
-        Callbacks.glfwFreeCallbacks(windowPtr);
+        glfwFreeCallbacks(windowPtr);
         glfwDestroyWindow(windowPtr);
         glfwTerminate();
     }

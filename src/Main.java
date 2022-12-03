@@ -37,8 +37,7 @@ public class Main {
         loop();
 
         // Free the window callbacks and destroy the window
-        glfwFreeCallbacks(window.getWindowPtr());
-        glfwDestroyWindow(window.getWindowPtr());
+        window.destroy();
 
         // Terminate GLFW and free the error callback
         glfwTerminate();

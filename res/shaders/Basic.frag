@@ -2,6 +2,8 @@
 in vec4 outPosition;
 
 uniform float u_time;
+uniform int u_iterations;
+uniform float u_speed;
 
 out vec4 outColor;
 
@@ -12,8 +14,8 @@ void main() {
 //    float distance = length(normalizedCoord);
 //    outColor = vec4(distance, distance, distance, 1.f);
 
-    float angle = u_time * 0.1;
-    for (float i = 0.0; i < 32.0; i+= 1.0) {
+    float angle = u_time * u_speed;
+    for (int i = 0; i < u_iterations; i++) {
         normalizedCoord = abs(normalizedCoord);
         normalizedCoord -= 0.5f;
         normalizedCoord *= 1.1f;
