@@ -1,3 +1,4 @@
+import imgui.ImGui;
 import lwjglutils.OGLBuffers;
 import lwjglutils.ShaderUtils;
 import org.lwjgl.BufferUtils;
@@ -10,7 +11,10 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer extends AbstractRenderer {
+    private int currentShader;
     private int basicShader;
+    private int juliaShader;
+    private int mandelbrotShader;
     private OGLBuffers renderTarget;
     double time;
     private boolean mouseButton1;
@@ -21,9 +25,13 @@ public class Renderer extends AbstractRenderer {
         //  glEnable(GL_PRIMITIVE_RESTART);
         //  glPrimitiveRestartIndex(Integer.MAX_VALUE);
         width = 800;
-        height = 600;
+        height = 800;
+
 
         basicShader = ShaderUtils.loadProgram("/shaders/Basic");
+        juliaShader = ShaderUtils.loadProgram("/shaders/Julia");
+//        mandelbrotShader = ShaderUtils.loadProgram("/shaders/Mandelbrot");
+
         glUseProgram(basicShader);
 
         // Vertices
@@ -48,15 +56,32 @@ public class Renderer extends AbstractRenderer {
     // display is in a while loop
     @Override
     public void display() {
-        // time
         time = glfwGetTime();
-        glUniform1f(glGetUniformLocation(basicShader, "u_time"), (float)time);
-        glUniform1i(glGetUniformLocation(basicShader, "u_iterations"), ImGuiLayer.iterations[0]);
-        glUniform1f(glGetUniformLocation(basicShader, "u_speed"), ImGuiLayer.speed[0]);
-        glUniform3fv(glGetUniformLocation(basicShader, "u_color"), ImGuiLayer.color);
-        glUniform1f(glGetUniformLocation(basicShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
 
-        renderTarget.draw(GL_TRIANGLES, basicShader);
+        if(ImGuiLayer.getCurrentFractalType().equals("Basic")) {
+            glUseProgram(basicShader);
+            currentShader = basicShader;
+        }
+
+        if(ImGuiLayer.getCurrentFractalType().equals("Julia")) {
+            glUseProgram(juliaShader);
+            currentShader = juliaShader;
+            glUniform1f(glGetUniformLocation(currentShader, "u_xOffset"), ImGuiLayer.xOffset[0]);
+            glUniform1f(glGetUniformLocation(currentShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
+        }
+
+        if(ImGuiLayer.getCurrentFractalType().equals("Mandelbrot")) {
+            glUseProgram(mandelbrotShader);
+            currentShader = basicShader;
+        }
+
+        glUniform1f(glGetUniformLocation(currentShader, "u_time"), (float)time);
+        glUniform1i(glGetUniformLocation(currentShader, "u_iterations"), ImGuiLayer.iterations[0]);
+        glUniform1f(glGetUniformLocation(currentShader, "u_speed"), ImGuiLayer.speed[0]);
+        glUniform3fv(glGetUniformLocation(currentShader, "u_color"), ImGuiLayer.color);
+        glUniform1f(glGetUniformLocation(currentShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
+
+        renderTarget.draw(GL_TRIANGLES, currentShader);
     }
 
     private GLFWCursorPosCallback cpCallbacknew = new GLFWCursorPosCallback() {
