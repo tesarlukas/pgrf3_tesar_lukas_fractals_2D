@@ -68,6 +68,8 @@ public class Renderer extends AbstractRenderer {
             currentShader = juliaShader;
             glUniform1f(glGetUniformLocation(currentShader, "u_xOffset"), ImGuiLayer.xOffset[0]);
             glUniform1f(glGetUniformLocation(currentShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
+            glUniform1f(glGetUniformLocation(currentShader, "u_cReal"), ImGuiLayer.cReal[0]);
+            glUniform1f(glGetUniformLocation(currentShader, "u_cImag"), ImGuiLayer.cImag[0]);
         }
 
         if(ImGuiLayer.getCurrentFractalType().equals("Mandelbrot")) {

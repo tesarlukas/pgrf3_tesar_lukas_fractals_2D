@@ -11,6 +11,8 @@ public class ImGuiLayer {
     private static String[] fractals = new String[]{"Basic", "Julia", "Mandelbrot"};
     public static float[] xOffset = new float[]{0.0f};
     public static float[] yOffset = new float[]{0.0f};
+    public static float[] cReal = new float[]{0.37f};
+    public static float[] cImag = new float[]{-0.37f};
 
     public void imgui() {
         if(ImGui.begin("Settings")) {
@@ -40,6 +42,14 @@ public class ImGuiLayer {
             ImGui.text("Y Offset");
             ImGui.sameLine();
             ImGui.dragFloat("## yOffset", yOffset, 0.001f, -4.0f, 4.0f);
+
+            ImGui.text("Real number");
+            ImGui.sameLine();
+            ImGui.dragFloat("## cReal", cReal, 0.001f, -4.0f, 4.0f);
+
+            ImGui.text("Imaginary number");
+            ImGui.sameLine();
+            ImGui.dragFloat("## cImag", cImag, 0.001f, -4.0f, 4.0f);
         }
         ImGui.end();
     }
