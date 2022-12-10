@@ -1,4 +1,5 @@
 import imgui.ImGui;
+import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 
 public class ImGuiLayer {
@@ -15,6 +16,8 @@ public class ImGuiLayer {
     public static float[] cImag = new float[]{0.0f};
     private static ImInt gradientType = new ImInt(0);
     private static String[] gradients = new String[]{"Black and white", "First", "Second", "Third", "Fourth"};
+    private static ImBoolean autoZoom = new ImBoolean(false);
+    public static long time;
 
     public void imgui() {
         if(ImGui.begin("Settings")) {
@@ -74,6 +77,12 @@ public class ImGuiLayer {
                 ImGui.text("Gradient");
                 ImGui.sameLine();
                 ImGui.listBox("## gradient", gradientType, gradients);
+
+                ImGui.text("Automated zoom");
+                ImGui.sameLine();
+                if (ImGui.checkbox("## autoZoom", autoZoom)) {
+                    time = System.currentTimeMillis();
+                }
             }
         }
         ImGui.end();
@@ -85,5 +94,13 @@ public class ImGuiLayer {
 
     public static int getGradientType() {
         return gradientType.get();
+    }
+
+    public static int isAutoZoom() {
+        if(autoZoom.get()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

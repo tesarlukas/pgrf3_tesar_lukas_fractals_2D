@@ -83,13 +83,19 @@ public class Renderer extends AbstractRenderer {
 
         if(ImGuiLayer.getCurrentFractalType().equals("Mandelbrot")) {
             glUseProgram(mandelbrotShader);
-            glUniform1f(glGetUniformLocation(mandelbrotShader, "u_time"), (float)time);
             glUniform1i(glGetUniformLocation(mandelbrotShader, "u_gradient"), ImGuiLayer.getGradientType());
             glUniform1i(glGetUniformLocation(mandelbrotShader, "u_iterations"), ImGuiLayer.iterations[0]);
             glUniform1f(glGetUniformLocation(mandelbrotShader, "u_speed"), ImGuiLayer.speed[0]);
             glUniform1f(glGetUniformLocation(mandelbrotShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
             glUniform1f(glGetUniformLocation(mandelbrotShader, "u_xOffset"), ImGuiLayer.xOffset[0]);
             glUniform1f(glGetUniformLocation(mandelbrotShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
+            if (ImGuiLayer.isAutoZoom() == 1) {
+                time = (System.currentTimeMillis() - ImGuiLayer.time)/1000f + 1;
+                glUniform1f(glGetUniformLocation(mandelbrotShader, "u_time"), (float)time);
+                glUniform1i(glGetUniformLocation(mandelbrotShader, "u_isAutoZoom"), ImGuiLayer.isAutoZoom());
+            } else {
+                glUniform1i(glGetUniformLocation(mandelbrotShader, "u_isAutoZoom"), ImGuiLayer.isAutoZoom());
+            }
 
             renderTarget.draw(GL_TRIANGLES, mandelbrotShader);
         }
