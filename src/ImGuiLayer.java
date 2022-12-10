@@ -11,8 +11,8 @@ public class ImGuiLayer {
     private static String[] fractals = new String[]{"Basic", "Julia", "Mandelbrot"};
     public static float[] xOffset = new float[]{0.0f};
     public static float[] yOffset = new float[]{0.0f};
-    public static float[] cReal = new float[]{0.37f};
-    public static float[] cImag = new float[]{-0.37f};
+    public static float[] cReal = new float[]{-1.402f};
+    public static float[] cImag = new float[]{0.0f};
     private static ImInt gradientType = new ImInt(0);
     private static String[] gradients = new String[]{"Black and white", "First", "Second", "Third", "Fourth"};
 

@@ -30,7 +30,7 @@ public class Renderer extends AbstractRenderer {
 
         basicShader = ShaderUtils.loadProgram("/shaders/Basic");
         juliaShader = ShaderUtils.loadProgram("/shaders/Julia");
-//        mandelbrotShader = ShaderUtils.loadProgram("/shaders/Mandelbrot");
+        mandelbrotShader = ShaderUtils.loadProgram("/shaders/Mandelbrot");
 
         glUseProgram(basicShader);
 
@@ -75,7 +75,7 @@ public class Renderer extends AbstractRenderer {
 
         if(ImGuiLayer.getCurrentFractalType().equals("Mandelbrot")) {
             glUseProgram(mandelbrotShader);
-            currentShader = basicShader;
+            currentShader = mandelbrotShader;
         }
 
         glUniform1f(glGetUniformLocation(currentShader, "u_time"), (float)time);
