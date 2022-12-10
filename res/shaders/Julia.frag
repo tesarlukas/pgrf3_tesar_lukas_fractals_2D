@@ -52,13 +52,13 @@ vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
 }
 
 void main() {
-    vec2 normalizedCoord = outPosition.xy;
+    dvec2 normalizedCoord = outPosition.xy;
 
-    float real = normalizedCoord.x * u_zoomLvl + u_xOffset;
-    float imag = normalizedCoord.y * u_zoomLvl + u_yOffset;
+    double real = normalizedCoord.x * u_zoomLvl + u_xOffset;
+    double imag = normalizedCoord.y * u_zoomLvl + u_yOffset;
 
     for (int i = 0; i < u_iterations; i++) {
-        float realTemp = real;
+        double realTemp = real;
         real = real*real - imag*imag + u_cReal;
         imag = 2*realTemp*imag + u_cImag;
         if(sqrt(real*real + imag*imag) > 4) {

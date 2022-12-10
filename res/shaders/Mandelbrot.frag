@@ -17,36 +17,36 @@ out vec4 outColor;
 float fractalColor = 0.0f;
 
 vec3[5][4] gradients = {
-{
-vec3(0),
-vec3(0),
-vec3(0),
-vec3(0),
-},
-{
-vec3(0.5, 0.5, 0.5),
-vec3(0.5, 0.5, 0.5),
-vec3(1., .7, 0.4),
-vec3(0., 0.15, 0.2)
-},
-{
-vec3(0.5, 0.5, 0.5),
-vec3(0.5, 0.5, 0.5),
-vec3(1., 1., 1.),
-vec3(0.3, 0.2, 0.2)
-},
-{
-vec3(0.5),
-vec3(0.5),
-vec3(1.),
-vec3(0.0, 0.1, 0.2)
-},
-{
-vec3(0.5, 0.5, 0.5),
-vec3(0.5, 0.5, 0.5),
-vec3(2., 1., 0.),
-vec3(0.5, 0.2, 0.25)
-}
+    {
+        vec3(0),
+        vec3(0),
+        vec3(0),
+        vec3(0),
+    },
+    {
+        vec3(0.5, 0.5, 0.5),
+        vec3(0.5, 0.5, 0.5),
+        vec3(1., .7, 0.4),
+        vec3(0., 0.15, 0.2)
+    },
+    {
+        vec3(0.5, 0.5, 0.5),
+        vec3(0.5, 0.5, 0.5),
+        vec3(1., 1., 1.),
+        vec3(0.3, 0.2, 0.2)
+    },
+    {
+        vec3(0.5),
+        vec3(0.5),
+        vec3(1.),
+        vec3(0.0, 0.1, 0.2)
+    },
+    {
+        vec3(0.5, 0.5, 0.5),
+        vec3(0.5, 0.5, 0.5),
+        vec3(2., 1., 0.),
+        vec3(0.5, 0.2, 0.25)
+    }
 };
 
 vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
@@ -54,19 +54,19 @@ vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
 }
 
 void main() {
-    vec2 normalizedCoord = outPosition.xy;
+    dvec2 normalizedCoord = outPosition.xy;
 
-    vec2 real = vec2(0);
-    vec2 imag = normalizedCoord * 1.2f + vec2(-0.6, 0.0);
-    imag = imag * u_zoomLvl + vec2(u_xOffset, u_yOffset);
+    dvec2 real = vec2(0);
+    dvec2 imag = normalizedCoord * 1.2f + dvec2(-0.6, 0.0);
+    imag = imag * u_zoomLvl + dvec2(u_xOffset, u_yOffset);
 
     if (u_isAutoZoom) {
-        imag = imag / pow(u_time, u_zoomSpeed) - vec2(u_xOffset, u_yOffset);
+        imag = imag / pow(u_time, u_zoomSpeed) - dvec2(u_xOffset, u_yOffset);
     }
 
     float i;
     for (i = 0.; i < u_iterations; i++) {
-        real = mat2(real, -real.y, real.x) * real + imag;
+        real = dmat2(real, -real.y, real.x) * real + imag;
         if (dot(real, real) > 4) break;
     }
 
