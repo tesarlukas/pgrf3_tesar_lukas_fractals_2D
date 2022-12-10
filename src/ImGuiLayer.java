@@ -18,6 +18,7 @@ public class ImGuiLayer {
     private static String[] gradients = new String[]{"Black and white", "First", "Second", "Third", "Fourth"};
     private static ImBoolean autoZoom = new ImBoolean(false);
     public static long time;
+    public static float[] zoomSpeed = new float[]{1.0f};
 
     public void imgui() {
         if(ImGui.begin("Settings")) {
@@ -83,6 +84,10 @@ public class ImGuiLayer {
                 if (ImGui.checkbox("## autoZoom", autoZoom)) {
                     time = System.currentTimeMillis();
                 }
+
+                ImGui.text("Speed of zoom");
+                ImGui.sameLine();
+                ImGui.dragFloat("## zoomSpeed", zoomSpeed, 0.001f, 0.0f, 16.0f);
             }
         }
         ImGui.end();

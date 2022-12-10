@@ -10,6 +10,7 @@ uniform float u_xOffset;
 uniform float u_yOffset;
 uniform int u_gradient;
 uniform bool u_isAutoZoom;
+uniform float u_zoomSpeed;
 
 out vec4 outColor;
 
@@ -60,7 +61,7 @@ void main() {
     imag = imag * u_zoomLvl + vec2(u_xOffset, u_yOffset);
 
     if (u_isAutoZoom) {
-        imag = imag / (u_time * u_time) - vec2(0.65 + u_xOffset, 0.45 + u_yOffset);
+        imag = imag / pow(u_time, u_zoomSpeed) - vec2(u_xOffset, u_yOffset);
     }
 
     float i;

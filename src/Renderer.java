@@ -89,6 +89,8 @@ public class Renderer extends AbstractRenderer {
             glUniform1f(glGetUniformLocation(mandelbrotShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
             glUniform1f(glGetUniformLocation(mandelbrotShader, "u_xOffset"), ImGuiLayer.xOffset[0]);
             glUniform1f(glGetUniformLocation(mandelbrotShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
+            glUniform1f(glGetUniformLocation(mandelbrotShader, "u_zoomSpeed"), ImGuiLayer.zoomSpeed[0]);
+
             if (ImGuiLayer.isAutoZoom() == 1) {
                 time = (System.currentTimeMillis() - ImGuiLayer.time)/1000f + 1;
                 glUniform1f(glGetUniformLocation(mandelbrotShader, "u_time"), (float)time);
