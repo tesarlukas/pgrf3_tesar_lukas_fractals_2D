@@ -54,15 +54,15 @@ vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
 void main() {
     vec2 normalizedCoord = outPosition.xy;
 
-    vec2 z = vec2(0);
-    vec2 c = normalizedCoord * 1.2f + vec2(-0.6, 0.0);
-    c = c * u_zoomLvl + vec2(u_xOffset, u_yOffset);
+    vec2 real = vec2(0);
+    vec2 imag = normalizedCoord * 1.2f + vec2(-0.6, 0.0);
+    imag = imag * u_zoomLvl + vec2(u_xOffset, u_yOffset);
 //    c = c / (u_time * u_time) - dvec2(0.65, 0.45);
 
     float i;
     for (i = 0.; i < u_iterations; i++) {
-        z = mat2(z, -z.y, z.x) * z + c;
-        if (dot(z, z) > 4) break;
+        real = mat2(real, -real.y, real.x) * real + imag;
+        if (dot(real, real) > 4) break;
     }
 
     if (i == u_iterations) { i = 0.f; }
