@@ -13,6 +13,8 @@ public class ImGuiLayer {
     public static float[] yOffset = new float[]{0.0f};
     public static float[] cReal = new float[]{0.37f};
     public static float[] cImag = new float[]{-0.37f};
+    private static ImInt gradientType = new ImInt(0);
+    private static String[] gradients = new String[]{"Black and white", "First", "Second", "Third", "Fourth"};
 
     public void imgui() {
         if(ImGui.begin("Settings")) {
@@ -55,6 +57,10 @@ public class ImGuiLayer {
                 ImGui.text("Y Offset");
                 ImGui.sameLine();
                 ImGui.dragFloat("## yOffset", yOffset, 0.001f, -4.0f, 4.0f);
+
+                ImGui.text("Gradient");
+                ImGui.sameLine();
+                ImGui.listBox("## gradient", gradientType, gradients);
             }
         }
         ImGui.end();
@@ -62,5 +68,9 @@ public class ImGuiLayer {
 
     public static String getCurrentFractalType() {
         return fractals[fractalType.get()];
+    }
+
+    public static int getGradientType() {
+        return gradientType.get();
     }
 }

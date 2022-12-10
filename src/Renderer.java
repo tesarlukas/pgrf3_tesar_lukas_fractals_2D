@@ -70,6 +70,7 @@ public class Renderer extends AbstractRenderer {
             glUniform1f(glGetUniformLocation(currentShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
             glUniform1f(glGetUniformLocation(currentShader, "u_cReal"), ImGuiLayer.cReal[0]);
             glUniform1f(glGetUniformLocation(currentShader, "u_cImag"), ImGuiLayer.cImag[0]);
+            glUniform1i(glGetUniformLocation(currentShader, "u_gradient"), ImGuiLayer.getGradientType());
         }
 
         if(ImGuiLayer.getCurrentFractalType().equals("Mandelbrot")) {
