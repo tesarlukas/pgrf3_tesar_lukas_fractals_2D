@@ -2,10 +2,7 @@
 #define doublePI 6.28318
 in vec4 outPosition;
 
-uniform float u_time;
 uniform int u_iterations;
-uniform float u_speed;
-uniform vec3 u_color;
 uniform float u_zoomLvl;
 uniform float u_xOffset;
 uniform float u_yOffset;

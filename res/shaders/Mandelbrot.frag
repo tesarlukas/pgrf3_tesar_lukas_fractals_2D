@@ -5,12 +5,9 @@ in vec4 outPosition;
 uniform float u_time;
 uniform int u_iterations;
 uniform float u_speed;
-uniform vec3 u_color;
 uniform float u_zoomLvl;
 uniform float u_xOffset;
 uniform float u_yOffset;
-uniform float u_cReal;
-uniform float u_cImag;
 uniform int u_gradient;
 
 out vec4 outColor;
@@ -55,10 +52,12 @@ vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
 }
 
 void main() {
-    dvec2 normalizedCoord = outPosition.xy;
+    vec2 normalizedCoord = outPosition.xy;
 
-    dvec2 z = dvec2(0), c = normalizedCoord * u_zoomLvl - vec2(.6, 0.);
-    c = c / (u_time * u_zoomLvl) - dvec2(0.65, 0.45);
+    vec2 z = vec2(0);
+    vec2 c = normalizedCoord * 1.2f + vec2(-0.6, 0.0);
+    c = c * u_zoomLvl + vec2(u_xOffset, u_yOffset);
+//    c = c / (u_time * u_time) - dvec2(0.65, 0.45);
 
     float i;
     for (i = 0.; i < u_iterations; i++) {

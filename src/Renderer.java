@@ -11,7 +11,6 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer extends AbstractRenderer {
-    private int currentShader;
     private int basicShader;
     private int juliaShader;
     private int mandelbrotShader;
@@ -60,32 +59,42 @@ public class Renderer extends AbstractRenderer {
 
         if(ImGuiLayer.getCurrentFractalType().equals("Basic")) {
             glUseProgram(basicShader);
-            currentShader = basicShader;
+            glUniform1f(glGetUniformLocation(basicShader, "u_time"), (float)time);
+            glUniform1i(glGetUniformLocation(basicShader, "u_iterations"), ImGuiLayer.iterations[0]);
+            glUniform1f(glGetUniformLocation(basicShader, "u_speed"), ImGuiLayer.speed[0]);
+            glUniform3fv(glGetUniformLocation(basicShader, "u_color"), ImGuiLayer.color);
+            glUniform1f(glGetUniformLocation(basicShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
+
+            renderTarget.draw(GL_TRIANGLES, basicShader);
         }
 
         if(ImGuiLayer.getCurrentFractalType().equals("Julia")) {
             glUseProgram(juliaShader);
-            currentShader = juliaShader;
-            glUniform1f(glGetUniformLocation(currentShader, "u_xOffset"), ImGuiLayer.xOffset[0]);
-            glUniform1f(glGetUniformLocation(currentShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
-            glUniform1f(glGetUniformLocation(currentShader, "u_cReal"), ImGuiLayer.cReal[0]);
-            glUniform1f(glGetUniformLocation(currentShader, "u_cImag"), ImGuiLayer.cImag[0]);
-            glUniform1i(glGetUniformLocation(currentShader, "u_gradient"), ImGuiLayer.getGradientType());
+            glUniform1i(glGetUniformLocation(juliaShader, "u_iterations"), ImGuiLayer.iterations[0]);
+            glUniform1f(glGetUniformLocation(juliaShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
+            glUniform1f(glGetUniformLocation(juliaShader, "u_xOffset"), ImGuiLayer.xOffset[0]);
+            glUniform1f(glGetUniformLocation(juliaShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
+            glUniform1f(glGetUniformLocation(juliaShader, "u_cReal"), ImGuiLayer.cReal[0]);
+            glUniform1f(glGetUniformLocation(juliaShader, "u_cImag"), ImGuiLayer.cImag[0]);
+            glUniform1i(glGetUniformLocation(juliaShader, "u_gradient"), ImGuiLayer.getGradientType());
+
+            renderTarget.draw(GL_TRIANGLES, juliaShader);
         }
 
         if(ImGuiLayer.getCurrentFractalType().equals("Mandelbrot")) {
             glUseProgram(mandelbrotShader);
-            currentShader = mandelbrotShader;
-            glUniform1i(glGetUniformLocation(currentShader, "u_gradient"), ImGuiLayer.getGradientType());
+            glUniform1f(glGetUniformLocation(mandelbrotShader, "u_time"), (float)time);
+            glUniform1i(glGetUniformLocation(mandelbrotShader, "u_gradient"), ImGuiLayer.getGradientType());
+            glUniform1i(glGetUniformLocation(mandelbrotShader, "u_iterations"), ImGuiLayer.iterations[0]);
+            glUniform1f(glGetUniformLocation(mandelbrotShader, "u_speed"), ImGuiLayer.speed[0]);
+            glUniform1f(glGetUniformLocation(mandelbrotShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
+            glUniform1f(glGetUniformLocation(mandelbrotShader, "u_xOffset"), ImGuiLayer.xOffset[0]);
+            glUniform1f(glGetUniformLocation(mandelbrotShader, "u_yOffset"), ImGuiLayer.yOffset[0]);
+
+            renderTarget.draw(GL_TRIANGLES, mandelbrotShader);
         }
 
-        glUniform1f(glGetUniformLocation(currentShader, "u_time"), (float)time);
-        glUniform1i(glGetUniformLocation(currentShader, "u_iterations"), ImGuiLayer.iterations[0]);
-        glUniform1f(glGetUniformLocation(currentShader, "u_speed"), ImGuiLayer.speed[0]);
-        glUniform3fv(glGetUniformLocation(currentShader, "u_color"), ImGuiLayer.color);
-        glUniform1f(glGetUniformLocation(currentShader, "u_zoomLvl"), ImGuiLayer.zoomLvl[0]);
 
-        renderTarget.draw(GL_TRIANGLES, currentShader);
     }
 
     private GLFWCursorPosCallback cpCallbacknew = new GLFWCursorPosCallback() {
