@@ -20,10 +20,6 @@ public class ImGuiLayer {
             ImGui.sameLine();
             ImGui.dragInt("## iterations", iterations, 1.f, 0.0f, 20000f);
 
-            ImGui.text("Animation speed");
-            ImGui.sameLine();
-            ImGui.dragFloat("## speed", speed, 0.001f, 0.0f, 4.0f);
-
             ImGui.text("Zoom Level");
             ImGui.sameLine();
             ImGui.dragFloat("## zoomLvl", zoomLvl, 0.001f, 0.0f, 4.0f);
@@ -32,24 +28,31 @@ public class ImGuiLayer {
 
             ImGui.text("Fractal");
             ImGui.sameLine();
-
             ImGui.listBox("## fractalType", fractalType, fractals);
 
-            ImGui.text("X Offset");
-            ImGui.sameLine();
-            ImGui.dragFloat("## xOffset", xOffset, 0.001f, -4.0f, 4.0f);
+            if (getCurrentFractalType().equals("Basic")) {
+                ImGui.text("Animation speed");
+                ImGui.sameLine();
+                ImGui.dragFloat("## speed", speed, 0.001f, 0.0f, 4.0f);
+            }
+            
+            if (getCurrentFractalType().equals("Julia")) {
+                ImGui.text("Real number");
+                ImGui.sameLine();
+                ImGui.dragFloat("## cReal", cReal, 0.001f, -4.0f, 4.0f);
 
-            ImGui.text("Y Offset");
-            ImGui.sameLine();
-            ImGui.dragFloat("## yOffset", yOffset, 0.001f, -4.0f, 4.0f);
+                ImGui.text("Imaginary number");
+                ImGui.sameLine();
+                ImGui.dragFloat("## cImag", cImag, 0.001f, -4.0f, 4.0f);
 
-            ImGui.text("Real number");
-            ImGui.sameLine();
-            ImGui.dragFloat("## cReal", cReal, 0.001f, -4.0f, 4.0f);
+                ImGui.text("X Offset");
+                ImGui.sameLine();
+                ImGui.dragFloat("## xOffset", xOffset, 0.001f, -4.0f, 4.0f);
 
-            ImGui.text("Imaginary number");
-            ImGui.sameLine();
-            ImGui.dragFloat("## cImag", cImag, 0.001f, -4.0f, 4.0f);
+                ImGui.text("Y Offset");
+                ImGui.sameLine();
+                ImGui.dragFloat("## yOffset", yOffset, 0.001f, -4.0f, 4.0f);
+            }
         }
         ImGui.end();
     }
