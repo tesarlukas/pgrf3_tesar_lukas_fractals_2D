@@ -62,6 +62,19 @@ public class ImGuiLayer {
                 ImGui.sameLine();
                 ImGui.listBox("## gradient", gradientType, gradients);
             }
+            if (getCurrentFractalType().equals("Mandelbrot")) {
+                ImGui.text("X Offset");
+                ImGui.sameLine();
+                ImGui.dragFloat("## xOffset", xOffset, 0.001f, -4.0f, 4.0f);
+
+                ImGui.text("Y Offset");
+                ImGui.sameLine();
+                ImGui.dragFloat("## yOffset", yOffset, 0.001f, -4.0f, 4.0f);
+
+                ImGui.text("Gradient");
+                ImGui.sameLine();
+                ImGui.listBox("## gradient", gradientType, gradients);
+            }
         }
         ImGui.end();
     }

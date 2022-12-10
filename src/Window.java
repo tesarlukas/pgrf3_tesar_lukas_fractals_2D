@@ -60,7 +60,7 @@ public class Window {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        windowPtr = glfwCreateWindow(800, 800, "Fractals 2D - Tesar Lukas", NULL, NULL);
+        windowPtr = glfwCreateWindow(1000, 1000, "Fractals 2D - Tesar Lukas", NULL, NULL);
 
         if (windowPtr == NULL) {
             System.out.println("Unable to create window");

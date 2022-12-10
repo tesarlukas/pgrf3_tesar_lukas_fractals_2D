@@ -16,10 +16,39 @@ uniform int u_gradient;
 out vec4 outColor;
 
 float fractalColor = 0.0f;
-vec3 a;
-vec3 b;
-vec3 c;
-vec3 d;
+
+vec3[5][4] gradients = {
+{
+vec3(0),
+vec3(0),
+vec3(0),
+vec3(0),
+},
+{
+vec3(0.5, 0.5, 0.5),
+vec3(0.5, 0.5, 0.5),
+vec3(1., .7, 0.4),
+vec3(0., 0.15, 0.2)
+},
+{
+vec3(0.5, 0.5, 0.5),
+vec3(0.5, 0.5, 0.5),
+vec3(1., 1., 1.),
+vec3(0.3, 0.2, 0.2)
+},
+{
+vec3(0.5),
+vec3(0.5),
+vec3(1.),
+vec3(0.0, 0.1, 0.2)
+},
+{
+vec3(0.5, 0.5, 0.5),
+vec3(0.5, 0.5, 0.5),
+vec3(2., 1., 0.),
+vec3(0.5, 0.2, 0.25)
+}
+};
 
 vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
     return a + b*cos( doublePI*(c*t+d) );
@@ -28,47 +57,20 @@ vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
 void main() {
     dvec2 normalizedCoord = outPosition.xy;
 
-    dvec2 z = dvec2(0), ci = normalizedCoord * u_zoomLvl;
-    ci = ci / (u_time * u_zoomLvl) - dvec2(0.65, 0.45);
+    dvec2 z = dvec2(0), c = normalizedCoord * u_zoomLvl - vec2(.6, 0.);
+    c = c / (u_time * u_zoomLvl) - dvec2(0.65, 0.45);
 
     float i;
     for (i = 0.; i < u_iterations; i++) {
-        z = mat2(z, -z.y, z.x) * z + ci;
+        z = mat2(z, -z.y, z.x) * z + c;
         if (dot(z, z) > 4) break;
     }
 
     if (i == u_iterations) { i = 0.f; }
     fractalColor = i/u_iterations;
 
-    switch(u_gradient) {
-        case 1:
-        a = vec3(0.5, 0.5, 0.5);
-        b = vec3(0.5, 0.5, 0.5);
-        c = vec3(1., .7, 0.4);
-        d = vec3(0., 0.15, 0.2);
-        break;
-        case 2:
-        a = vec3(0.5, 0.5, 0.5);
-        b = vec3(0.5, 0.5, 0.5);
-        c = vec3(1., 1., 1.);
-        d = vec3(0.3, 0.2, 0.2);
-        break;
-        case 3:
-        a = vec3(0.5);
-        b = vec3(0.5);
-        c = vec3(1.);
-        d = vec3(0.0, 0.1, 0.2);
-        break;
-        case 4:
-        a = vec3(0.5, 0.5, 0.5);
-        b = vec3(0.5, 0.5, 0.5);
-        c = vec3(2., 1., 0.);
-        d = vec3(0.5, 0.2, 0.25);
-        break;
-    }
-
     if (u_gradient > 0) {
-        vec3 col = gradient(fract(fractalColor + 0.5), a, b, c, d);
+        vec3 col = gradient(fract(fractalColor + 0.5), gradients[u_gradient][0], gradients[u_gradient][1],gradients[u_gradient][2],gradients[u_gradient][3]);
         outColor = vec4(col, 1f);
         return;
     }

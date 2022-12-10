@@ -76,6 +76,7 @@ public class Renderer extends AbstractRenderer {
         if(ImGuiLayer.getCurrentFractalType().equals("Mandelbrot")) {
             glUseProgram(mandelbrotShader);
             currentShader = mandelbrotShader;
+            glUniform1i(glGetUniformLocation(currentShader, "u_gradient"), ImGuiLayer.getGradientType());
         }
 
         glUniform1f(glGetUniformLocation(currentShader, "u_time"), (float)time);
