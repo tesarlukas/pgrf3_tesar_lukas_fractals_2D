@@ -1,4 +1,5 @@
 #version 450
+#define doublePI 6.28318
 in vec4 outPosition;
 
 uniform float u_time;
@@ -13,9 +14,30 @@ uniform float u_cImag;
 
 out vec4 outColor;
 
-//float cReal = 0.37;
-//float cImag = -0.370;
 float fractalColor = 0.0f;
+//vec3 a = vec3(0.5, 0.5, 0.5);
+//vec3 b = vec3(0.5, 0.5, 0.5);
+//vec3 c = vec3(2., 1., 0.);
+//vec3 d = vec3(0.5, 0.2, 0.25);
+
+//vec3 a = vec3(0.5, 0.5, 0.5);
+//vec3 b = vec3(0.5, 0.5, 0.5);
+//vec3 c = vec3(1., .7, 0.4);
+//vec3 d = vec3(0., 0.15, 0.2);
+
+vec3 a = vec3(0.5, 0.5, 0.5);
+vec3 b = vec3(0.5, 0.5, 0.5);
+vec3 c = vec3(1., 1., 1.);
+vec3 d = vec3(0.3, 0.2, 0.2);
+
+//vec3 a = vec3(0.5);
+//vec3 b = vec3(0.5);
+//vec3 c = vec3(1.);
+//vec3 d = vec3(0.0, 0.1, 0.2);
+
+vec3 gradient(float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
+    return a + b*cos( doublePI*(c*t+d) );
+}
 
 void main() {
     vec2 normalizedCoord = outPosition.xy;
@@ -32,5 +54,8 @@ void main() {
         }
     }
 
-    outColor = vec4(vec3(fractalColor), 1f);
+    vec3 col = gradient(fract(fractalColor + 0.5), a, b, c, d);
+    outColor = vec4(col, 1f);
+
+//    outColor = vec4(vec3(fractalColor), 1f);
 }

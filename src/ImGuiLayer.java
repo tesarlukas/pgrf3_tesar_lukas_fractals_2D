@@ -16,34 +16,37 @@ public class ImGuiLayer {
 
     public void imgui() {
         if(ImGui.begin("Settings")) {
+            ImGui.text("Fractal");
+            ImGui.sameLine();
+            ImGui.listBox("## fractalType", fractalType, fractals);
+
             ImGui.text("Number of iterations:");
             ImGui.sameLine();
-            ImGui.dragInt("## iterations", iterations, 1.f, 0.0f, 20000f);
+            ImGui.dragInt("## iterations", iterations, .1f, 0.0f, 20000f);
 
             ImGui.text("Zoom Level");
             ImGui.sameLine();
             ImGui.dragFloat("## zoomLvl", zoomLvl, 0.001f, 0.0f, 4.0f);
 
-            ImGui.colorEdit3("Color", color);
-
-            ImGui.text("Fractal");
-            ImGui.sameLine();
-            ImGui.listBox("## fractalType", fractalType, fractals);
 
             if (getCurrentFractalType().equals("Basic")) {
+                ImGui.text("Color");
+                ImGui.sameLine();
+                ImGui.colorEdit3("## color", color);
+
                 ImGui.text("Animation speed");
                 ImGui.sameLine();
                 ImGui.dragFloat("## speed", speed, 0.001f, 0.0f, 4.0f);
             }
-            
+
             if (getCurrentFractalType().equals("Julia")) {
                 ImGui.text("Real number");
                 ImGui.sameLine();
-                ImGui.dragFloat("## cReal", cReal, 0.001f, -4.0f, 4.0f);
+                ImGui.dragFloat("## cReal", cReal, 0.0005f, -4.0f, 4.0f);
 
                 ImGui.text("Imaginary number");
                 ImGui.sameLine();
-                ImGui.dragFloat("## cImag", cImag, 0.001f, -4.0f, 4.0f);
+                ImGui.dragFloat("## cImag", cImag, 0.0005f, -4.0f, 4.0f);
 
                 ImGui.text("X Offset");
                 ImGui.sameLine();
